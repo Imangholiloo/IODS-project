@@ -11,3 +11,11 @@ date()
 ```
 The text continues here.
 
+
+## -------------------------------------------------
+## Hello. I am feeling excited to start this course. I would like to further develop my data science skills in R and get familiar with Github.
+"My GitHub repository is https://github.com/Imangholiloo/IODS-project "
+
+##Here is a small code to start playing with!
+```(for  i in Helllooo R){
+  print (i)}```
