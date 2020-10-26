@@ -17,5 +17,5 @@ The text continues here.
 "My GitHub repository is https://github.com/Imangholiloo/IODS-project "
 
 ##Here is a small code to start playing with!
-```(for  i in Helllooo R){
+```for  (i in "Helllooo R"){
   print (i)}```
