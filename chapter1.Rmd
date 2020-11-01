@@ -1,7 +1,7 @@
 ---
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
   word_document: default
 ---
 
@@ -15,9 +15,7 @@ output:
 date()
 
 ```
-The text continues here.
-
-
+The text continues here
 ## -------------------------------------------------
 ## Hello everyone, I am feeling excited to start this course. I would like to further develop my data science skills in R and get familiar with Github.
 "My GitHub repository is https://github.com/Imangholiloo/IODS-project "
