@@ -1,3 +1,8 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
 
 # About the project
 
@@ -9,13 +14,17 @@ date()
 ```
 The text continues here.
 
-
 ## -------------------------------------------------
 ## Hello. I am feeling excited to start this course. I would like to further develop my data science skills in R and get familiar with Github.
 "My GitHub repository is https://github.com/Imangholiloo/IODS-project "
 
-##Here is a small code to start playing with!
-```for  (i in "Helllooo R"){
-  print (i)}```
+  
+```{r}
+# Here is a small code to start playing with!.
+print(Sys.time())
+for  (i in "Helllooo R"){
+  print (i)}
+
+```
   
   ## Greetings everyone
