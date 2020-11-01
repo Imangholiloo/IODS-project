@@ -1,9 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
-  word_document: default
----
 
 # About the project
 
@@ -11,13 +5,13 @@ output:
 
 ```{r}
 # This is a so-called "R chunk" where you can write R code.
-
 date()
-
 ```
-The text continues here
+The text continues here.
+
+
 ## -------------------------------------------------
-## Hello everyone, I am feeling excited to start this course. I would like to further develop my data science skills in R and get familiar with Github.
+## Hello. I am feeling excited to start this course. I would like to further develop my data science skills in R and get familiar with Github.
 "My GitHub repository is https://github.com/Imangholiloo/IODS-project "
 
 ##Here is a small code to start playing with!
