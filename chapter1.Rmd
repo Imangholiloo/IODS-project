@@ -1,8 +1,8 @@
 ---
 output:
-  word_document: default
-  pdf_document: default
   html_document: default
+  pdf_document: default
+  word_document: default
 ---
 
 # About the project
@@ -39,7 +39,7 @@ library(rmarkdown)
 # *Exercise 2:* **Linear regression analysis**
 
 
-# *Part 1) Data wrangling*
+## *Part 1) Data wrangling*
 Read the data to R  
 ```{r}
 lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
@@ -143,7 +143,7 @@ str(learning2014_read_again)
 summary(learning2014_read_again)
 ```
 
-# *Part 2) Data analysis*
+## *Part 2) Data analysis*
 read the data
 
 ```{r}

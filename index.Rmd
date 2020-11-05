@@ -3,12 +3,15 @@ title: "IODS course project"
 author: "Mohammad Imangholiloo"
 output:
   html_document:
-    theme: cosmo
-    toc: true
-    toc_depth: 2
-    fig_caption: true
-    fig_width: 6
+    fig_caption: yes
     fig_height: 4
+    fig_width: 6
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+  word_document:
+    toc: yes
+    toc_depth: '2'
 ---
 
 ***
