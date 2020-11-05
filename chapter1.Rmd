@@ -1,8 +1,8 @@
 ---
 output:
-  html_document: default
-  pdf_document: default
   word_document: default
+  pdf_document: default
+  html_document: default
 ---
 
 # About the project
@@ -63,7 +63,7 @@ str(lrn14)
 ```
 As it shows, the data have 186 observations and 63 columns and data structure were also given (all are intiger, except gender which is character).
 
-#3///////////////////////
+#3---
 selecting columns  
 Name of group of columns (in List) realted to questions under the umbrella of 'deep', 'surface' and 'strategic learning'
 
@@ -118,7 +118,7 @@ summary(needed_columns_2014)
 ```{r}
 View(needed_columns_2014) #to view the table in R
 ```
-#4///////////////////////////////////////////
+#4---
 ```{r}
 #set working dir
 setwd("C:/Users/Mohammad/Documents/IODS-project/data/")
@@ -178,7 +178,7 @@ table(learning2014$gender) # to show the number of participants by gender"
 ```{r}
 table(learning2014$age) # to show the number of participants by age"
 ```
-#2/////////////////
+#2---
 ```{r}
 #graphical shows interactions (i.e. correlations and distrbutions) of columns (e.g. variables) of this dataset togehter
 plot(learning2014[c(-1,-2)]) #[c(-1,-2)] >>> is to remove indexcolumn and gender (strings) elements of df, source: https://statisticsglobe.com/remove-element-from-list-in-r
@@ -187,7 +187,7 @@ plot(learning2014[c(-1,-2)]) #[c(-1,-2)] >>> is to remove indexcolumn and gender
 hist(learning2014$age, col='grey') # to check histogram of a column (e.g. age)
 ```
 
-# *Extra coding 1 *
+# *Extra coding 1: Loop to automaticlly plot many variables*
 A loop to automaticlly plot histogram of all variables
 NB: Check that variables are all numberical, otherwise in gender (male/female, this will stop)
 
@@ -249,7 +249,7 @@ I hope you got facinated and liked it like me :)
 The graph shows a (strong) negative correlation (r2= -324) between surface and deep learning2014
 
 
-#3/////////////////  
+#3---  
 Now that we got familiar with variables and their distribution and correction, it's time to fit a regression model  
 
 ### ---- Simple linear regression model -----  
@@ -283,7 +283,7 @@ In this model now, we tried to predict the exam point using attitude, stra, and 
 but as the results show. only attitude has statistically significant relation with the exam model,
 thus, we shall change the other variables
 
-#4 /////////////////  
+#4---  
 It seems that there is not significant relationship between exam point and stratigic learnign and surface. So we shall rmeove them
 
 
@@ -294,7 +294,7 @@ summary(my_model3)
 ```  
 As model summary shows, still other variables such as age, deep, stra are not significant, but stra is very close to significance level of 95%, as it is Pr(>|t|) value is just a bit higher than 0.05 (so, very close
 
-#5 /////////////////  
+#5---  
 
 ##### Yet another multiple linear regression model  
 ```{r}
@@ -327,7 +327,7 @@ Residuals vs Leverage plot helps identify which observation have an unusual high
 *more info about interpretations: https://vimeo.com/199820384*  
 
 
-# *Extra coding 2 * 
+# *Extra coding 2: Box-plot* 
 Let's also check the residuales of the model using a boxplot. The closer to 0 the better the model. In other words, it shows the
 symmetry and specifically the normality of the error terms in the regression model.  
 ```{r}
