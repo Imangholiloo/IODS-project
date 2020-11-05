@@ -34,7 +34,7 @@ library(rmarkdown)
 ## ------------------------------------------------------------------------------------
 
 **Mohammad Imangholiloo**  
-20201105 
+20201105
 
 # *Exercise 2:* **Linear regression analysis**
 
