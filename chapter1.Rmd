@@ -1,8 +1,8 @@
 ---
 output:
-  word_document: default
-  pdf_document: default
   html_document: default
+  pdf_document: default
+  word_document: default
 ---
 
 # About the project
@@ -35,10 +35,12 @@ library(rmarkdown)
 
 **Mohammad Imangholiloo**  
 20201105  
-# Exercise 2: Linear regression analysis  
 
-*Part 1) data wrangling*
-# read the data to R
+# *Exercise 2:* **Linear regression analysis**
+
+
+# *Part 1) Data wrangling*
+Read the data to R  
 ```{r}
 lrn14 <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt", sep="\t", header=TRUE)
 ```
@@ -185,7 +187,7 @@ plot(learning2014[c(-1,-2)]) #[c(-1,-2)] >>> is to remove indexcolumn and gender
 hist(learning2014$age, col='grey') # to check histogram of a column (e.g. age)
 ```
 
-# *Extra 1 *
+# *Extra coding 1 *
 A loop to automaticlly plot histogram of all variables
 NB: Check that variables are all numberical, otherwise in gender (male/female, this will stop)
 
@@ -325,7 +327,7 @@ Residuals vs Leverage plot helps identify which observation have an unusual high
 *more info about interpretations: https://vimeo.com/199820384*  
 
 
-### Extra 2:  
+# *Extra coding 2 * 
 Let's also check the residuales of the model using a boxplot. The closer to 0 the better the model. In other words, it shows the
 symmetry and specifically the normality of the error terms in the regression model.  
 ```{r}
