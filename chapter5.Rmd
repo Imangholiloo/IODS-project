@@ -1,0 +1,147 @@
+---
+title: "Chapter 5"
+author: "Mohammad Imangholiloo"
+date: "18 November 2020"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# About the project  
+**Welcome to my page**  
+
+This is the learning diary for the course 'Introduction to Open Data Science 2020'. I would like to further develop my data science skills in R and get familiar with Github.  
+*My GitHub repository is https://github.com/Imangholiloo/IODS-project*
+
+```{r}
+# Let's get the date and time
+date()
+```
+alternatively, `print(Sys.time())`
+
+## ------------------------------------------------------------------------------------  
+
+
+# *Exercise 5:* **Dimensionality reduction techniques**  
+<br>
+Mohamamd Imangholiloo  
+
+## *Part 1) Data wrangling*  
+*Note: this was done to prepare for next week*  
+ 
+```{r}
+#Read the “Human development” file into R
+hd <- read.csv("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human_development.csv", stringsAsFactors = F)
+
+#Read the “Gender inequality” file into R
+gii <- read.csv("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/gender_inequality.csv", stringsAsFactors = F, na.strings = "..")
+```  
+
+For data decription and more info please visit:  
+http://hdr.undp.org/en/content/human-development-index-hdi and http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf
+
+```{r}
+#strcutre of data  
+str(hd)  
+
+#dimension of file (row* column)  
+dim(hd)
+```  
+
+```{r}
+#summary of file
+summary(hd)
+```  
+
+<br>
+```{r}
+#column names  
+colnames(hd)  
+```  
+<br>
+```{r}
+#see head and tail of the data  
+head(hd)  
+tail(hd)  
+```  
+
+Let's do the same for gii dataset  
+```{r}
+#strcutre of data  
+str(gii)  
+
+#dimension of file (row* column)  
+dim(gii)  
+
+#summary of file
+summary(gii)
+
+#column names
+colnames(gii)
+
+#see head and tail of the data
+head(gii)
+tail(gii)
+```
+
+
+Task 4: rename the variables with (shorter) descriptive names  
+```{r}
+colnames(hd)
+colnames(hd) <- c('HDI_Rank', 'Country', 'HDI', 'Life_Expec_Birth', 
+                  'Expec_yr_Edu', 'Mean_yr_Edu', 'GNI_per_Cap', 
+                  'GNI_per_Cap_Min_HDI_Rank')
+colnames(hd)
+```
+So you can see that column names were shorten.  
+
+
+Let's do the same fo gii dataset  
+
+```{r}
+colnames(gii)
+colnames(gii) <- c('GII_Rank', 'Country', 'GII', 'Mortality_R', 
+                  'Adolescent_Birth_R', 'Representation_Parliament',
+                  'Sec_Edu_Fem','Sec_Edu_Mal',
+                  "Lab_Forc_Particip_R_Fem",
+                  "Lab_Forc_Particip_R_Mal" )
+colnames(gii)
+```
+So you can see that column names were shorten.  
+
+
+
+
+**Task 5.** Mutate the “Gender inequality” data and create two new variables  
+```{r}
+library("dplyr")
+gii <- mutate(gii, edu_R = (Sec_Edu_Fem/Sec_Edu_Mal))
+head(gii)
+
+
+gii <- mutate(gii, Lab_Forc_R = (Lab_Forc_Particip_R_Fem/Lab_Forc_Particip_R_Mal))
+head(gii)
+```
+# Extra coding: alternative to mutate function  
+Instead of using mutate, this is also possible.
+```{r}
+gii$edu_R <- gii$Sec_Edu_Fem/gii$Sec_Edu_Mal
+```
+
+**Task 6:** Join together the two datasets using the variable Country as the identifier.  
+**TIP**: we use inner join to keep only observations in both data sets.  
+```{r}
+hd_gii_joint <- inner_join(hd, gii, 
+                           by = 'Country', suffix = c("_hd", "_gi"))
+
+head(hd_gii_joint)
+dim(hd_gii_joint)
+
+setwd("./data")
+write.csv(hd_gii_joint, "human.csv")
+```
