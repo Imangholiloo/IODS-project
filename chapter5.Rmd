@@ -31,9 +31,10 @@ alternatively, `print(Sys.time())`
 <br>
 Mohamamd Imangholiloo  
 
+Nowadays, it's common to have huge datasets (like Big Data) in which there could be multiple variables with high correlation with each other, or noise within the data. Meaning that, one variable can explain more of the other one. Thus, it is good to reduce the high dimensionality of our data.  
+There are many available methods, but we will learn about principal component analysis (PCA), which reduces any number of measured (continuous) and correlated variables into a few uncorrelated components that collect together as much variance as possible from the original variables. And Multiple correspondence analysis (MCA) which gives us similar possibilities in the world of discrete variables, even nominal scale (classified) variables, by finding a suitable transformation into continuous scales and then reducing the dimensions quite analogously with the PCA. *More info: https://vimeo.com/204164956*
+
 ## *Part 1) Data wrangling*  
-*Note: this was done to prepare for next week*  
- 
 ```{r}
 #Read the “Human development” file into R
 hd <- read.csv("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human_development.csv", stringsAsFactors = F)
@@ -41,46 +42,45 @@ hd <- read.csv("http://s3.amazonaws.com/assets.datacamp.com/production/course_22
 #Read the “Gender inequality” file into R
 gii <- read.csv("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/gender_inequality.csv", stringsAsFactors = F, na.strings = "..")
 ```  
-
-For data decription and more info please visit:  
-http://hdr.undp.org/en/content/human-development-index-hdi and http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf
+For data description and more info please visit: http://hdr.undp.org/en/content/human-development-index-hdi and http://hdr.undp.org/sites/default/files/hdr2015_technical_notes.pdf
 
 ```{r}
-#strcutre of data  
-str(hd)  
+#strcutre of data
+str(hd)
 
-#dimension of file (row* column)  
+#dimension of file (row* column)
 dim(hd)
-```  
 
-```{r}
 #summary of file
 summary(hd)
 ```  
+As you can see, our columns are all numerical, except two columns of country and GNI_per_capita, which are class
 
-<br>
 ```{r}
-#column names  
-colnames(hd)  
-```  
-<br>
+#column names
+colnames(hd)
+```
+As you can see, column names are long, so in next phases, we will shorten the names.  
 ```{r}
-#see head and tail of the data  
-head(hd)  
-tail(hd)  
-```  
+#see head and tail of the data
+head(hd)
+tail(hd)
 
-Let's do the same for gii dataset  
-```{r}
-#strcutre of data  
-str(gii)  
+#Let's do the same for gii dataset
+#strcutre of data
+str(gii)
 
-#dimension of file (row* column)  
-dim(gii)  
+#dimension of file (row* column)
+dim(gii)
 
 #summary of file
 summary(gii)
 
+```  
+As summary shows, all variables, except country, are numerical variable
+
+
+```{r}
 #column names
 colnames(gii)
 
@@ -89,8 +89,7 @@ head(gii)
 tail(gii)
 ```
 
-
-Task 4: rename the variables with (shorter) descriptive names  
+**Task 4** : rename the variables with (shorter) descriptive names  
 ```{r}
 colnames(hd)
 colnames(hd) <- c('HDI_Rank', 'Country', 'HDI', 'Life_Expec_Birth', 
@@ -98,11 +97,10 @@ colnames(hd) <- c('HDI_Rank', 'Country', 'HDI', 'Life_Expec_Birth',
                   'GNI_per_Cap_Min_HDI_Rank')
 colnames(hd)
 ```
-So you can see that column names were shorten.  
+so you can see that column names were shorten.
 
 
-Let's do the same fo gii dataset  
-
+**Let's do the same fo gii dataset**
 ```{r}
 colnames(gii)
 colnames(gii) <- c('GII_Rank', 'Country', 'GII', 'Mortality_R', 
@@ -112,29 +110,28 @@ colnames(gii) <- c('GII_Rank', 'Country', 'GII', 'Mortality_R',
                   "Lab_Forc_Particip_R_Mal" )
 colnames(gii)
 ```
-So you can see that column names were shorten.  
+So you can see that column names were shorten.
 
 
 
-
-**Task 5.** Mutate the “Gender inequality” data and create two new variables  
+**Task 5** . Mutate the “Gender inequality” data and create two new variables  
 ```{r}
-library("dplyr")
+library(dplyr)
 gii <- mutate(gii, edu_R = (Sec_Edu_Fem/Sec_Edu_Mal))
 head(gii)
-
+```  
+# Extra coding 1: alternative to mutate function
+instead of using mutate, this is also possible:
+```{r}
+gii$edu_R <- gii$Sec_Edu_Fem/gii$Sec_Edu_Mal
 
 gii <- mutate(gii, Lab_Forc_R = (Lab_Forc_Particip_R_Fem/Lab_Forc_Particip_R_Mal))
 head(gii)
 ```
-# Extra coding: alternative to mutate function  
-Instead of using mutate, this is also possible.
-```{r}
-gii$edu_R <- gii$Sec_Edu_Fem/gii$Sec_Edu_Mal
-```
 
-**Task 6:** Join together the two datasets using the variable Country as the identifier.  
-**TIP**: we use inner join to keep only observations in both data sets.  
+
+**Task 6** .Join together the two datasets using the variable Country as the identifier  
+**TIP** we use inner join to keep only observations in both data sets  
 ```{r}
 hd_gii_joint <- inner_join(hd, gii, 
                            by = 'Country', suffix = c("_hd", "_gi"))
@@ -142,6 +139,343 @@ hd_gii_joint <- inner_join(hd, gii,
 head(hd_gii_joint)
 dim(hd_gii_joint)
 
-setwd("./data")
-write.csv(hd_gii_joint, "human.csv")
+str(hd_gii_joint)
+
+#setwd("./data")
+write.csv(hd_gii_joint, "./data/human.csv")
 ```
+
+
+## *Data wrangling* `(for this week)` 
+Now in this week, lets continue to data wrangling and analysis in theme of dimensionality reduction
+```{r}
+human <- read.csv("./data/human.csv")
+#altrnatively, you can read directly from web:
+human <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human1.txt", sep  =",", header = T)
+
+# check column names of the data
+names(human)
+
+#dimention of dataset
+dim(human)
+```
+**Data description: **  
+This data originates from the United Nations Development Programme. It gives us information about Human Development status in different countries by different variables.  
+The data combines several indicators from most countries in the world. *More info in http://hdr.undp.org/en/content/human-development-index-hdi*  
+
+The variables names and their descriptions are as following:
+"Country" = Country name  
+
+Health and knowledge  
+"GNI" = Gross National Income per capita  
+"Life.Exp" = Life expectancy at birth  
+"Edu.Exp" = Expected years of schooling  
+"Mat.Mor" = Maternal mortality ratio  
+"Ado.Birth" = Adolescent birth rate  
+
+Empowerment  
+"Parli.F" = Percentage of female representatives in parliament  
+"Edu2.F" = Proportion of females with at least secondary education  
+"Edu2.M" = Proportion of males with at least secondary education  
+"Labo.F" = Proportion of females in the labour force  
+"Labo.M" " Proportion of males in the labour force  
+
+"Edu2.FM" = Edu2.F / Edu2.M  
+"Labo.FM" = Labo2.F / Labo2.M"  
+
+NOTE: Since I personally do not like dots (.) to be in the file or columns names, I like to change it to underscore (_)  
+```{r}
+colnames(human) <- c("HDI_Rank", "Country", "HDI", "Life_Exp", 
+                   "Edu_Exp", "Edu_Mean", "GNI", "GNI_Minus_Rank",
+                   "GII_Rank","GII","Mat_Mor","Ado_Birth",
+                   "Parli_F","Edu2_F","Edu2_M","Labo_F",
+                   "Labo_M","Edu2_FM","Labo_FM")
+#Source: https://raw.githubusercontent.com/TuomoNieminen/Helsinki-Open-Data-Science/master/datasets/human_meta.txt  
+
+# Check Column names again that changed successfully
+colnames(human)
+
+# look at the structure of human
+str(human)
+
+# print out summaries of the variables
+summary(human)
+```  
+The summary shows the minimum, maximum, mean, and 1st and 3rd quartiles of the data together with median. It also shows if there as NA cells in our columns. Moreover, we can see that all variables, except Country and GNI index, are numerical
+
+
+
+**Task 1** : Mutate the data: transform the Gross National Income (GNI) variable to numeric"
+```{r}
+# access the stringr package
+library(stringr)
+
+# look at the structure of the GNI column in 'human'
+str(human$GNI)
+class(human$GNI)
+```
+As you can see, this GNI column is not numerical (is character class), so we shall change it as numeric.  
+
+```{r}
+# remove the commas from GNI and print out a numeric version of it
+human$GNI <- str_replace(human$GNI, pattern=",", replace ="") %>% as.numeric
+
+str(human$GNI)
+class(human$GNI)
+```
+
+
+**Task 2**: keep only the columns matching the following variable names"  
+```{r}
+# columns to keep
+keep <- c("Country", "Edu2_FM", "Labo_FM", "Life_Exp", "Edu_Exp", 
+          "GNI", "Mat_Mor", "Ado_Birth", "Parli_F")
+
+# select the 'keep' columns
+human <- dplyr::select(human, one_of(keep))
+
+length(keep)
+ncol(human)
+```
+So the number of columns of dataset is now equal to the number of variables we like to keep.
+
+
+**Task 3** : Remove all rows with missing values  
+```{r}
+# print out a completeness indicator of the 'human' data
+complete.cases(human)
+```  
+`complete.cases` function Return a logical vector indicating which cases are complete, i.e., have no missing values
+
+```{r}
+# print out the data along with a completeness indicator as the last column
+data.frame(human[-1], comp = complete.cases(human))
+
+# filter out all rows with NA values
+human_filterd <- filter(human, complete.cases(human))
+dim(human_filterd)
+dim(human)
+```
+So you can see that the original human dataset had 195 rows, an now has 162.
+
+# Extra coding 2: alternatively, you could do with the following code too
+```{r}
+library(tidyverse)
+human_filterd_new = human %>% drop_na()
+dim(human_filterd_new)
+
+#Or alternatively same 
+human_ = human %>% drop_na(colnames(human))
+dim(human_)
+```
+
+**Task 4**: Remove the observations which relate to regions instead of countries
+```{r}
+#look at the last 10 observations
+tail(human_filterd, 10)
+
+# last indice we want to keep
+last <- nrow(human_filterd) - 7
+
+# choose everything until the last 7 observations
+human_ <- human_filterd[1:last, ]
+```
+**Task 5**. Define the row names of the data by the country names
+```{r}
+# add countries as rownames
+rownames(human_filterd) <- human_filterd$Country
+
+# remove the Country variable
+human_ <- select(human_filterd, -Country)
+
+# load library
+library(GGally)
+library(corrplot)
+# visualize the 'human_' variables
+ggpairs(human_)
+```  
+As the graph shows, there is strong correlation between some variables such as ado_birth abd mat_mor and edu_exp. similarly, GNI and life_exp and edu_exp.
+
+```{r}
+# compute the correlation matrix and visualize it with corrplot
+cor(human_) %>% corrplot(type = "lower")
+```  
+As graph shows, there is strong negative correlation between Mat_Mor and Life_Exp, which means by increase of mmat_mor, life_exp increases. Same for Life_Exp and Abo_birth.  
+Also, some positive correlation between abo_birth and Mat_Mor. Parli_F and labo_FM are not correlating with other variables.  
+**TIP:** by including ´(type = "lower")` you set it to plot lower triangular part of correlation matirx.  
+```{r}
+write.csv(human_, "human_new.csv")
+```
+
+## *Part 2) Data analysis*  
+
+```{r}
+human <- read.csv("human_new.csv")
+# Alternatively, yu can read directly from web
+human <- read.csv("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep = ",", stringsAsFactors = F)
+dim(human)
+```
+**Task 1** : Show a graphical overview
+```{r}
+# standardize the variables
+human_std <- scale(human)
+```  
+As `center = True` (by default), now, this scale is done now by cantering which is done by subtracting the column means (omitting NAs) of x from their corresponding columns.  
+We standardize the data, because PCA is sensitive to relative scaling od the orignal features.
+
+```{r}
+# print out summaries of the standardized variables
+summary(human_std)
+summary(human)
+```  
+As you can see from the summary of scaled and not-scaled data, the scaled one is standardized based on mean of each column, so data are not heteroscedasticity effect. So, we are not ready for further analysis.  
+
+```{r}
+ggpairs(as.data.frame(human_std))
+```  
+This visualises the data distribution for each column and comparing with other columns.  
+```{r}
+cor(as.data.frame(human_std)) %>% corrplot(type = "lower")
+```  
+The correction matrix (same as above) is given here, same interpretation as in data wrangling part
+
+
+**Task 2** Perform principal component analysis (PCA) with the SVD method  
+As instructed, we do PCA on not standardized human data.
+```{r}
+pca_human <- prcomp(human)
+summary(pca_human)
+
+# Draw a biplot displaying the observations by the first two principal components (PC1 coordinate in x-axis, PC2 coordinate in y-axis)
+biplot(pca_human, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2"))
+```  
+The arrows show the original variables (there are overlapping on each other).
+
+
+
+**Task 3**  Perfom PCa with standardize variables  
+```{r}
+pca_human <- prcomp(human_std)
+summary(pca_human)
+# Draw a biplot displaying the observations by the first two principal components (PC1 coordinate in x-axis, PC2 coordinate in y-axis)
+biplot(pca_human, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2"))
+```  
+The arrows show the original variables
+
+```{r}
+# rounded percentages of variance captured by each PC
+pca_pr <- round(100*summary(pca_human)$importance[2,], digits = 1) 
+pca_pr
+
+# create object pc_lab to be used as axis labels
+pc_lab <- paste0(names(pca_pr), " (", pca_pr, "%)")
+
+# draw a biplot
+biplot(pca_human, cex = c(0.8, 1), col = c("grey40", "deeppink2"), xlab = pc_lab[1], ylab = pc_lab[2])
+```
+
+**Interpretation** In the biplot small angle between arrows means high correlation between two variables. Thus, as Parli_F and Edu.Exp abd life_exp has high angle, thus don’t have high correlation (as also shown earlier in above correlation graphs).  
+On the other hand, Edu.Exp and GNI and Edu2.FM has very narrow angle, thus very high correlation (again, explain in above correlation plots).  
+Additionally, we can see that Principal component 2 (PC2), in Y axis, has same direction to Parli_F and Labo_FM variables, thus, PC2 is contributing to that features (dimensions), while all other variables has contributing to PC1. *More info in https://vimeo.com/204165420*
+
+As for PCA components printed by summary function, the results differ, which is as expected. Because we standardised the data to have not heteroscedasticity. Moreover, since the data were standardized, the Standard deviation and Proportion of Variance will be different with non-standardised dataset.  
+We shall remember the PCA is sensitive to scaling of variables.  
+To interpret PCA, we could look at Proportion of Variance and its cumulative proportion. For example, in the standardized data, the PCA shows that PCA1 contributes to 53.6% of the variance in the data, and PCA2 contributes to 16.3%. Comparing this result with non-standardised result, the data and results has changed which is as expected because there were some heterostasity in the data which CA is sensitive for. PCA1 already could contribute over 99% of variance which looks doubtful to me. Thus, standardising the data is very effective and helpful to use before PCA analysis and getting the dimension of data reduced!  
+It makes sense, because in actual phenomenon’s, Gross National Income per capita (GNI) is higher if Expected years of schooling (Edu_Exp) is higher, and therefore, Life expectancy (Life_Exp) will be higher.
+
+**Task 4:**
+I personally think that using PCA is very useful because cool and very useful also in my own research in forest data science where I often have tens of variables. PCA 1 and PCA 2 together show/contribute to nearly 70% (53.6+16.2) of the variance in the original data.  
+
+# Extra coding 3: Plot PCA in 3D  
+*inspired from https://cran.r-project.org/web/packages/pca3d/vignettes/pca3d.pdf*
+```{r}
+library(pca3d)
+gr<-factor(rownames(human_std))
+#summary(gr)
+pca3d(pca_human, group=gr)
+snapshotPCA3d(file="first_plot.png")
+```
+**feel free to zoom on it or rotate it**.  
+Every item in 3D is an observation (country) in 3D space created by PC1, PC2 and PC3. 
+
+  
+
+## Multiple Correspondence Analysis  
+**Task 5:**  
+Let's do Multiple Correspondence Analysis (MCA) using the Factominer package, which contains functions dedicated to multivariate explanatory data analysis. It contains for example methods (Multiple) Correspondence analysis, Multiple Factor analysis as well as PCA.  
+We will do only Multiple Correspondence Analysis (MCA) with this data.  
+In this part I am going to use the tea dataset. The dataset contains the answers of a questionnaire on tea consumption. 
+```{r}
+library(FactoMineR)
+library(ggplot2)
+data(tea)
+View(tea)
+
+# column names to keep in the dataset
+keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
+
+# select the 'keep_columns' to create a new dataset
+tea_time <- dplyr::select(tea, one_of(keep_columns))
+
+# look at the summaries and structure of the data
+summary(tea_time)
+str(tea_time)
+```
+As you can see, the data include information on tea consumption, e.g. 74 of black tea, 193 Earl Grey and 33 green tea, and how people drink the tea etc. We are doing to plot them and see visally ( as following).  
+```{r}
+# column names to keep in the dataset
+keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
+
+# select the 'keep_columns' to create a new dataset
+tea_time <- select(tea, one_of(keep_columns))
+
+# look at the summaries and structure of the data
+summary(tea_time)
+str(tea_time)
+
+# visualize the dataset
+gather(tea_time) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar() + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
+```  
+So you can see the data that include information on tea consumption, multiple columns about how it was used, what type of tea where and when they drink it.  
+
+
+We use some of the columns for MCA analysis
+```{r}
+mca <- MCA(tea_time, graph = FALSE)
+
+#summary of the model
+summary(mca)
+```
+**Interpreation: ** MCA is another approach for dimensionality reduction. MCA works well with categerical variables, as PCA for numerical variables.
+#As summary show, the MCA gives us for example Eigenvalues, which include Variance, percentage of variance and cumulative percentage of variance for each dimension. As it shows, dimention 1, contains/contributes to 15.238 of variance in the data, Dim 2, 14% and Dim 3 nearly 12%. It gradually declines as I plot the in the following extra coding parts.  
+Additionally, next part of summary shows the individuals (10 first here) for each dimension, contribution of each dimension (ctr), and squared correlation of each dimension (cos2). For example, Dim1, which the coordinated is -0.298, has contribution of 0.106 and squared correlation is 0.086. Note that Dim here is equalling to each principal component (PC) in the PCA. So, both approached (MCA and PCA) we transform the original data.  
+The next part, shows Categories (the 10 first), has v-test values (like normal t-test) in addition to the same stuff explained above. v.test value for black tea is 4.677 which means the coordinates is significantly different from zero. all values below or above +/-1.96 means that.  
+Final part of the summary shows Categorical variables (eta2) which shows squared correlation between each variable and dimension.  The closer to 1, the stronger the correlation is. For example, how category and Dim.1 has strong correlation (0.708), which lunch and Dim.1 has no correlation (0.0). *For more info please check https://vimeo.com/204251158*  
+
+
+Visualize MCA by biplot
+```{r}
+plot(mca, invisible=c("ind"), habillage = "quali") 
+```  
+**Interpreation** the plot shows the MCA factor map, which is made by plotting Dim1 and Dim2 in x and y axises, respectively. It made easy ro see the possible variables patterns. The shorter distance between the variables the more similar they are, e.g. No sugar and No lunch in middle of the graph, which makes a good sense :). But tea bag and unpacked are far from each other which shows dissimilarities between those. 
+
+
+
+# Extra coding 4: other plotting options for multiple correspondence analysis
+*inspritred from; http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/114-mca-multiple-correspondence-analysis-in-r-essentials/*
+```{r}
+library("factoextra")
+# Color by cos2 values: quality on the factor map
+fviz_mca_var(mca, col.var = "cos2",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+             repel = TRUE, # Avoid text overlapping
+             ggtheme = theme_minimal())
+```  
+The graph shows the squared correlation (cos2) in the variables. Which is a new thig to this is the same graph as above.
+
+**Or yet another way of plotting**  
+```{r}
+factoextra::fviz_screeplot(mca, addlabels = TRUE, ylim = c(0, 45))
+```  
+<br>
+**Interpreation: ** We can see that by increasing the dimension, the percentage of explained variance is declining. It means that the first variables contribute to the variance of the data and make it kind of saturated, that for example 10th dimension has less to contribute to variance, because most of variance it already filled and shown by earlier dimensions. 
