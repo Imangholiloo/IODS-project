@@ -3,8 +3,9 @@ title: "Chapter 5"
 author: "Mohammad Imangholiloo"
 date: "18 November 2020"
 output:
-  html_document: default
+  word_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -30,7 +31,7 @@ alternatively, `print(Sys.time())`
 # *Exercise 5:* **Dimensionality reduction techniques**  
 <br>
 Mohamamd Imangholiloo  
-
+*My GitHub repository is https://github.com/Imangholiloo/IODS-project*  
 Nowadays, it's common to have huge datasets (like Big Data) in which there could be multiple variables with high correlation with each other, or noise within the data. Meaning that, one variable can explain more of the other one. Thus, it is good to reduce the high dimensionality of our data.  
 There are many available methods, but we will learn about principal component analysis (PCA), which reduces any number of measured (continuous) and correlated variables into a few uncorrelated components that collect together as much variance as possible from the original variables. And Multiple correspondence analysis (MCA) which gives us similar possibilities in the world of discrete variables, even nominal scale (classified) variables, by finding a suitable transformation into continuous scales and then reducing the dimensions quite analogously with the PCA. *More info: https://vimeo.com/204164956*
 
