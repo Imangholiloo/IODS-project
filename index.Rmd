@@ -2,9 +2,6 @@
 title: "Open data science (IODS) course project"
 author: "Mohammad Imangholiloo"
 output:
-  word_document:
-    toc: yes
-    toc_depth: '2'
   html_document:
     fig_caption: yes
     fig_height: 4
@@ -12,6 +9,9 @@ output:
     theme: cosmo
     toc: yes
     toc_depth: 2
+  word_document:
+    toc: yes
+    toc_depth: '2'
 ---
 
 ***

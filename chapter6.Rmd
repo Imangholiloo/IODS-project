@@ -40,6 +40,7 @@ We will prepare and analyse two data sets, BPRS and RATS.
 ## *Part 1) Data wrangling*  
 **Task 1** Read and understand the data  
 **Data description** BPRS data have 40 male subjects which were randomly assigned to one of two treatment groups and each subject was rated on the brief psychiatric rating scale (BPRS) measured before treatment began (week 0) and then at weekly intervals for eight weeks. The BPRS assesses the level of 18 symptom constructs such as hostility, suspiciousness, hallucinations, and grandiosity; each of these is rated from one (not present) to seven (extremely severe). The scale is used to evaluate patients suspected of having schizophrenia.  
+**NOTE: `The swapped data are in latter half of this report, because I pro-actively did both chapters and both methods.`** *Hence, I am happy to present all results.So, please remember that the swapped data are in latter part of this report.*  
 
 ```{r, echo=FALSE}
 #to solve an error (answered in https://stackoverflow.com/q/30519673)
@@ -465,7 +466,138 @@ abline(a = 0, b= 1, col = "blue")
 ```  
 The blue line in graph shows the 1:1 diagonal line, for example if x = 500, y = 500. So, the ideal case will be like that. So, we compare now our predicted and original value using that line, because if the measured weight of rat is 600 grams, then ideally the predicted weight should be 600 grams too. So, this line shows that. As graph shows, the predicted weights were very closed to original values, which was also shown by the RMSE and Bias numbers. For example, if the weight of rat was 500 grams, it was models very closely to that number (with MSE of 16.32%).  
 
+
+
+
+
+
+############################################
+# **DATA SWAPPING** 
+############################################
+# Now, let's **swap the data to use chapter 8 data for rats and chapter 9 for BPRS values**
+## *Apply analysis from chapter 8 of textbook for the RATS dataset*
+
+```{r}
+RATSL <- RATSL %>%
+  filter(Time > 1) %>%
+  group_by(Group, ID) %>%
+  summarise( mean=mean(Weight) ) %>%
+  ungroup()
+
+# Glimpse the data
+glimpse(RATSL)
+```
+
+**NOTE:** Since I already have the plots and their interpretations (in upper section), I go straight Analysis part.  
+Analysis of variance table for the fitted model, without baselines.
+
+## Fit the linear model with the mean as the response on the swapped data  
+```{r}
+fit <- lm(mean ~ Group, data = RATSL)
+summary(fit)
+```  
+As model summary shows, all variables of groups 2 and 3 as well as intercept of the model are significant (in confidence level of 99%).  
+
+## Compute the analysis of variance table for the fitted model with anova()
+```{r}
+anova(fit)
+```  
+The ANOVA test shows that the 'Group' variable is statistically significant in confidence interval of 99%; thus, there is significant difference between Groups of rats weights.  
+
+
+
+
+
+## *Apply analysis from chapter 9 of textbook for the Brief Psychiatric Rating Scale (BPRS) dataset*  
+
+### Regression model  
+```{r}
+reg_bprs <- lm(bprs ~ week + treatment, data = BPRSL)
+
+summary(reg_bprs)
+```  
+The summary of linear model shows that the variable 'weeks' is significant (in confidence interval of 99% because Pr(>|t|) id <2e-16, however treatment2 is not significant because the value for it is 0.661.  
+
+### Random intercept model (model#1)  
+```{r}
+reg_bprs_Ran_intercept_1 <- lmer(bprs ~ week + treatment + (1 | subject ),  
+                                 data = BPRSL, REML = FALSE)
+summary(reg_bprs_Ran_intercept_1)
+```  
+As we can see from the summary, the estimated standard error of week (0.2084) is smaller now than previously with regression model (0.2524), which reflects the effects of considering the probable within-subject dependence applied in this Random Intercept Model. However, standard error of treatment is 1.076 now which was smaller (1.03) previously.  
+More importantly, we can see that the estimated mean value of BPRS with fixed effects was 46.45 which remained the same as in previous model larger. Using a rule-of-thumb of 2 for t value *(introduced in this link: https://web.stanford.edu/class/psych252/section/Mixed_models_tutorial.html)*, we can say that t is probability significant."
+```{r}
+#Random intercept model (model#2)
+reg_bprs_Ran_intercept_2 <- lmer(bprs ~ week + treatment + treatment*week + (week | subject),  
+                                 data = BPRSL, REML = FALSE)
+summary(reg_bprs_Ran_intercept_2)
+
+#Random intercept model (model#3)
+reg_bprs_Ran_intercept_3 <- lmer(bprs ~ week + treatment + treatment*week + (treatment| subject),
+                                 data = BPRSL, REML = FALSE)
+summary(reg_bprs_Ran_intercept_3)
+```  
+From the summary of the three random intercept models we can use the t value to discuss that it seems treatment2 variable being always significant because it remains between -2 and +2. 
+Taking the model 3 as an example, we can also see that there is good correlation between week and week*treatment (-0.707). Then correlation is second highest in treatment and intercept (-0.586). So, lets run analysis of variance (ANOVA) table and check from there.  
+
+### Lets check ANOVA test on the models 1 and 2  
+```{r}
+anova(reg_bprs_Ran_intercept_1, reg_bprs_Ran_intercept_2)
+```
+### Lets check ANOVA test on the models 1 and 3  
+```{r}
+anova(reg_bprs_Ran_intercept_1, reg_bprs_Ran_intercept_3)
+```  
+According to the value of Pr(>Chisq), the model 1 and model 3 pairs performed more significantly and better than model 1 and 2 pairs, because the first pair (model 1&3) gave smaller Pr(>Chisq) value which is significant in confidence interval of 99% (because the value is well below 0.01.  
+Moreover, the AIC value of model was smaller (which reflects the betterness of the model.  
+BIC is another statistical metric that we can use for assessing the models, the smaller the better. It penalizes model complexity (variables) more than AIC. Thus, the BIC value for model 3 was smallest.  
+
+
+
+Now we can plot the model fitted values with original BPRS values and calculate RMSE and Bias of the values.  
+Since we have original value and model fitted values for BPRS, we can calculate root mean square error (RMSE) the statistical metric that measures how far apart our fitted values are from our original values in a regression analysis, on average.  
+*inspired from https://www.statology.org/how-to-calculate-rmse-in-r/*
+```{r}
+RMSE = sqrt(mean((RATSL$Weight - RATSL$Fitted)^2))
+
+
+# Create a vector of the fitted values
+Fitted <- fitted(reg_bprs_Ran_intercept_3)
+
+RMSE = sqrt(mean((BPRSL$bprs - Fitted)^2))
+```
+The smaller the RMSE, the better a model is able to fit the data.  
+```{r}
+RMSE_percent = 100*RMSE/mean(BPRSL$bprs)
+RMSE_percent
+```  
+We can also calculate Mean squared error (MSE). It is another most common metrics used to measure the prediction accuracy of a model. It is also called bias.  
+So, RMSE is 18.34%, which confirms our model is predicting the BPRS values rather good. Good job!  
+```{r}
+MSE = mean((BPRSL$bprs - Fitted)^2)
+MSE
+```  
+The lower the value for MSE, the more accurately a model is able to predict values.  
+
+```{r}
+MSE_percent = 100*MSE/mean(BPRSL$bprs)
+MSE_percent 
+```
+So, our model is 126% underestimating the actual BPRS value, which is very high.  
+
+```{r}
+plot(Fitted, BPRSL$bprs, main = "BPRS fitted vs measured", 
+     xlab = "Model fitted BPRS", ylab = "Measured BPRS", 
+     xlim = c(0,100), ylim=c(0,100))
+abline(a = 0, b= 1, col = "blue", )
+```
+**Interpretation: ** The blue line in graph shows the 1:1 diagonal line, for example if x = 500, y = 500, which will be in fact an ideal case.  
+So, that line can help us easily compare our model fitted BPRS values vs original value, because if the measured value of BPRS is for example 40, then ideally the fitted BPRS value should ideally be 40 too. As graph shows, the predicted weights were closed to original values, however, the larger BPRS value were under-estimated. This underestimation was also confirmed by the MSE of 47.72, which is rather large(126%). However, the relative RMSE was 18.34%, which is rather good!  
+
+
+
+
 **Final notes**
 Independence was a most important assumption in the mixed models that we used here to resolve the non-independencies in our data. Otherwise, linear regression models could also do.  
 
-**Thanks for your reading my page. Please feel free to comment or ask question, and to contact me :) **
+**Thanks for your reading my page. Please feel free to comment or ask question, and to contact me. :) **
