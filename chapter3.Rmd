@@ -11,44 +11,12 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
-# About the project
-**Welcome to my page**
-
-This is the learning diary for the course 'Introduction to Open Data Science 2020'. I would like to further develop my data science skills in R and get familiar with Github.  
-*My GitHub repository is https://github.com/Imangholiloo/IODS-project*
-
-```{r}
-# Let's get the date and time
-date()
-```
-alternatively, `print(Sys.time())`
-
-```{r}
-# Let's say hello to you via R!.
-for  (i in "Hello anyone"){
-  print (i)}
-
-```
-
-```{r}
-# load package
-library(rmarkdown)
-```  
-
-<br>
-
-## ------------------------------------------------------------------------------------
-
-**Mohammad Imangholiloo**  
-20201112
-
 # *Exercise 3:* **Logistic regression analysis**
 In this script we assess Student Performance Data Set from 
-___URL: https://archive.ics.uci.edu/ml/datasets/Student+Performance___
+*URL: https://archive.ics.uci.edu/ml/datasets/Student+Performance*
 
-Data description:  
-This data approach student achievement in secondary education of two Portuguese schools. The data attributes include student grades, demographic, social and school related features) and it was collected by using school reports and questionnaires. Two datasets are provided regarding the performance in two distinct subjects: Mathematics (mat) and Portuguese language (por).  ___more info: https://archive.ics.uci.edu/ml/datasets/Student+Performance___
+**Data description:**  
+This data approach student achievement in secondary education of two Portuguese schools. The data attributes include student grades, demographic, social and school related features) and it was collected by using school reports and questionnaires. Two datasets are provided regarding the performance in two distinct subjects: Mathematics (mat) and Portuguese language (por). *For more info visit: https://archive.ics.uci.edu/ml/datasets/Student+Performance*
 
 
 ## *Part 1) Data wrangling*
@@ -68,16 +36,16 @@ student_por=read.csv("student-por.csv",sep=";",header=TRUE)
 dim(student_mat)
 dim(student_por)
 # check structure of both data
-str(student_mat)
-str(student_por)
+"str(student_mat)" # I comment these lines out to shorten the report
+"str(student_por)" 
 
 # check first 5 rows of both data
-head(student_mat)
-head(student_por)
+'head(student_mat)' # I comment these lines out to shorten the report
+'head(student_por)' 
 
 # check last 5 rows of both data
-tail(student_mat)
-tail(student_por)
+'tail(student_mat)' # I comment these lines out to shorten the report
+'tail(student_por)'
 
 #a short view about descriptive statistical features of the columns, e.g. mean, min, max, etc.
 summary(student_mat) 
@@ -121,7 +89,7 @@ colnames(students_math_por_joint)
 glimpse(students_math_por_joint)
 
 # check data structure
-str(students_math_por_joint)
+'str(students_math_por_joint)' # I comment these lines out to shorten the report
 ```
 
 
@@ -158,7 +126,7 @@ for(column_name in notjoined_columns) {
 }
 
 # glimpse at the new combined data
-glimpse(alc)
+'glimpse(alc)' # I comment these lines out to shorten the report
 ```
 
 
@@ -185,7 +153,7 @@ g2 <- ggplot(alc, aes(high_use))
 g2 + facet_wrap("sex") + geom_bar()
 ```
 
-# EXTRA coding: Lets check it by table also
+### **Extra coding 1: Lets check it by table also**  
 ```{r}
 table(alc$high_use)
 "as it shows 114 students were consumed alcohol more than threshold (2) so were high use"
@@ -253,7 +221,6 @@ write.csv(alc, "students_math_por_joint.csv")
 ```
 
 <br>
-<br>  
 
 ## *Part 2) Data analysis*
 Now that we prepared the data, let's go for analysing the data
@@ -309,7 +276,7 @@ cross_table
 ```
 
 
-# EXTRA coding: Calculate the proportion of each variable in table, rounding to 2 decimals  
+### **Extra coding 2: Calculate the proportion of each variable in table, rounding to 2 decimals**  
 ```{r}
 round(prop.table(cross_table), 2)
 
@@ -334,14 +301,12 @@ chisq.test(cross_table)
 As p-value < 0.05, thus the distrubution of this variable (going out behaviour) is significantly differnet  
 Note: don't worry about the warning message, becuase the number of data is few.  
 
-
-
 <br>
 Yet, for another variable  
 ```{r}
 #Crosstable
 cross_table = xtabs(~alc_use + absences, data = dt_some_col)
-cross_table
+#cross_table
 # to get proportion of each, with 2 decimal rounded
 round(prop.table(cross_table), 2)
 
@@ -452,7 +417,7 @@ Now, 2x2 cross tabulation of predictions versus the actual values
 As it shows, 247 cases of high_use alcohol consumptions were false and were predicted correctly as false, 71 of them were miscalssified.    
 
 <br>  
-# EXTRA coding: Create a nice graph with confusion matrix
+### **Extra coding 3: Create a nice graph with confusion matrix**
 ```{r}
 # insprited from https://stackoverflow.com/a/64539733
 library('caret')
@@ -509,7 +474,7 @@ cv <- cv.glm(data = dt_some_col, cost = loss_func, glmfit = regres_model, K = 2)
 cv$delta[1]
 ```
 
-# EXTRA coding: Make a loop to try different k values
+### **Extra coding 4: Make a loop to try different k values**
 ```{r}
 k = c(2,3,4,5,6,7,8,9,10,11,12,13,14,15,20,25)
 for (i in k){
@@ -611,7 +576,7 @@ cv <- cv.glm(data = dt_some_col, cost = loss_func, glmfit = regres_model, K = 2)
 cv$delta[1]
 ```
 
-# EXTRA coding: Try different k values using a loop for new model
+### **Extra coding 5: Try different k values using a loop for new model**  
 ```{r}
 k = c(2,3,4,5,6,7,8,9,10,11,12,13,14,15,20,25)
 for (i in k){
