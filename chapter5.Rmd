@@ -3,34 +3,17 @@ title: "Chapter 5"
 author: "Mohammad Imangholiloo"
 date: "18 November 2020"
 output:
-  word_document: default
-  pdf_document: default
   html_document: default
+  pdf_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-
-# About the project  
-**Welcome to my page**  
-
-This is the learning diary for the course 'Introduction to Open Data Science 2020'. I would like to further develop my data science skills in R and get familiar with Github.  
-*My GitHub repository is https://github.com/Imangholiloo/IODS-project*
-
-```{r}
-# Let's get the date and time
-date()
-```
-alternatively, `print(Sys.time())`
-
-## ------------------------------------------------------------------------------------  
-
-
 # *Exercise 5:* **Dimensionality reduction techniques**  
-<br>
-Mohamamd Imangholiloo  
+<br>  
+
 *My GitHub repository is https://github.com/Imangholiloo/IODS-project*  
 Nowadays, it's common to have huge datasets (like Big Data) in which there could be multiple variables with high correlation with each other, or noise within the data. Meaning that, one variable can explain more of the other one. Thus, it is good to reduce the high dimensionality of our data.  
 There are many available methods, but we will learn about principal component analysis (PCA), which reduces any number of measured (continuous) and correlated variables into a few uncorrelated components that collect together as much variance as possible from the original variables. And Multiple correspondence analysis (MCA) which gives us similar possibilities in the world of discrete variables, even nominal scale (classified) variables, by finding a suitable transformation into continuous scales and then reducing the dimensions quite analogously with the PCA. *More info: https://vimeo.com/204164956*
@@ -64,8 +47,8 @@ colnames(hd)
 As you can see, column names are long, so in next phases, we will shorten the names.  
 ```{r}
 #see head and tail of the data
-head(hd)
-tail(hd)
+"head(hd)" # I comment these lines out to shorten the report
+'tail(hd)'
 
 #Let's do the same for gii dataset
 #strcutre of data
@@ -86,8 +69,8 @@ As summary shows, all variables, except country, are numerical variable
 colnames(gii)
 
 #see head and tail of the data
-head(gii)
-tail(gii)
+'head(gii)' # I comment these lines out to shorten the report
+'tail(gii)'
 ```
 
 **Task 4** : rename the variables with (shorter) descriptive names  
@@ -101,7 +84,7 @@ colnames(hd)
 so you can see that column names were shorten.
 
 
-**Let's do the same fo gii dataset**
+**Let's do the same for gii dataset**
 ```{r}
 colnames(gii)
 colnames(gii) <- c('GII_Rank', 'Country', 'GII', 'Mortality_R', 
@@ -121,7 +104,7 @@ library(dplyr)
 gii <- mutate(gii, edu_R = (Sec_Edu_Fem/Sec_Edu_Mal))
 head(gii)
 ```  
-# Extra coding 1: alternative to mutate function
+### **Extra coding 1: alternative to mutate function**
 instead of using mutate, this is also possible:
 ```{r}
 gii$edu_R <- gii$Sec_Edu_Fem/gii$Sec_Edu_Mal
@@ -248,10 +231,12 @@ complete.cases(human)
 ```  
 `complete.cases` function Return a logical vector indicating which cases are complete, i.e., have no missing values
 
-```{r}
+```{r message=FALSE, include=FALSE}
 # print out the data along with a completeness indicator as the last column
 data.frame(human[-1], comp = complete.cases(human))
 
+```  
+```{r}
 # filter out all rows with NA values
 human_filterd <- filter(human, complete.cases(human))
 dim(human_filterd)
@@ -259,7 +244,7 @@ dim(human)
 ```
 So you can see that the original human dataset had 195 rows, an now has 162.
 
-# Extra coding 2: alternatively, you could do with the following code too
+### **Extra coding 2: alternatively, you could do with the following code too**  
 ```{r}
 library(tidyverse)
 human_filterd_new = human %>% drop_na()
@@ -387,7 +372,7 @@ It makes sense, because in actual phenomenon’s, Gross National Income per capi
 **Task 4:**
 I personally think that using PCA is very useful because cool and very useful also in my own research in forest data science where I often have tens of variables. PCA 1 and PCA 2 together show/contribute to nearly 70% (53.6+16.2) of the variance in the original data.  
 
-# Extra coding 3: Plot PCA in 3D  
+### **Extra coding 3: Plot PCA in 3D**    
 *inspired from https://cran.r-project.org/web/packages/pca3d/vignettes/pca3d.pdf*
 ```{r}
 library(pca3d)
@@ -400,9 +385,7 @@ snapshotPCA3d(file="first_plot.png")
 Every item in 3D is an observation (country) in 3D space created by PC1, PC2 and PC3. 
 
   
-
-## Multiple Correspondence Analysis  
-**Task 5:**  
+**Task 5: Multiple Correspondence Analysis**  
 Let's do Multiple Correspondence Analysis (MCA) using the Factominer package, which contains functions dedicated to multivariate explanatory data analysis. It contains for example methods (Multiple) Correspondence analysis, Multiple Factor analysis as well as PCA.  
 We will do only Multiple Correspondence Analysis (MCA) with this data.  
 In this part I am going to use the tea dataset. The dataset contains the answers of a questionnaire on tea consumption. 
@@ -462,7 +445,7 @@ plot(mca, invisible=c("ind"), habillage = "quali")
 
 
 
-# Extra coding 4: other plotting options for multiple correspondence analysis
+### **Extra coding 4: other plotting options for multiple correspondence analysis**
 *inspritred from; http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/114-mca-multiple-correspondence-analysis-in-r-essentials/*
 ```{r}
 library("factoextra")
