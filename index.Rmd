@@ -9,14 +9,15 @@ output:
     theme: cosmo
     toc: yes
     toc_depth: 2
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
   word_document:
     toc: yes
     toc_depth: '2'
 ---
 
 ***
-
-# Introduction to Open Data Science - Course Project
 
 ```{r child = "chapter1.Rmd"}
 # This will include Chapter 1 (that is updated in its own file) in the document.
