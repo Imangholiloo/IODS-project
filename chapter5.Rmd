@@ -120,7 +120,7 @@ head(gii)
 hd_gii_joint <- inner_join(hd, gii, 
                            by = 'Country', suffix = c("_hd", "_gi"))
 
-head(hd_gii_joint)
+'head(hd_gii_joint)' # I comment theis line out to shorten the
 dim(hd_gii_joint)
 
 str(hd_gii_joint)
@@ -180,7 +180,7 @@ colnames(human) <- c("HDI_Rank", "Country", "HDI", "Life_Exp",
 colnames(human)
 
 # look at the structure of human
-str(human)
+'str(human)' # I comment this line out to shorten the
 
 # print out summaries of the variables
 summary(human)
