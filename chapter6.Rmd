@@ -528,7 +528,7 @@ anova(reg_bprs_Ran_intercept_1, reg_bprs_Ran_intercept_2)
 ```{r}
 anova(reg_bprs_Ran_intercept_1, reg_bprs_Ran_intercept_3)
 ```  
-According to the value of Pr(>Chisq), the model 1 and model 3 pairs performed more significantly and better than model 1 and 2 pairs, because the first pair (model 1&3) gave smaller Pr(>Chisq) value which is significant in confidence interval of 99% (because the value is well below 0.01.  
+**Interpretation** According to the value of Pr(>Chisq), the model 1 and model 3 pairs performed more significantly and better than model 1 and 2 pairs, because the first pair (model 1&3) gave smaller Pr(>Chisq) value which is significant in confidence interval of 99% (because the value is well below 0.01.  
 Moreover, the AIC value of model was smaller (which reflects the betterness of the model.  
 BIC is another statistical metric that we can use for assessing the models, the smaller the better. It penalizes model complexity (variables) more than AIC. Thus, the BIC value for model 3 was smallest.  
 
