@@ -8,21 +8,6 @@ output:
   word_document: default
 ---
 
-
-# About the project  
-**Welcome to my page**  
-
-This is the learning diary for the course 'Introduction to Open Data Science 2020'. I would like to further develop my data science skills in R and get familiar with Github.  
-*My GitHub repository is https://github.com/Imangholiloo/IODS-project*
-
-```{r}
-# Let's get the date and time
-date()
-```
-alternatively, `print(Sys.time())`  
-
-## ------------------------------------------------------------------------------------  
-
 # *Exercise 4:* **Clustering and classification**  
 
 ## *Part 1) Data wrangling*  
@@ -115,19 +100,18 @@ Let's investigate any possible correlctions within data calculate the correlatio
 cor_matrix<-cor(Boston) %>% round(digits = 2)
 
 # print the correlation matrix
-cor_matrix
+"cor_matrix" # I comment this line out to shorten the report
 ```  
 
-# Exta coding: make publication ready interactive Tables in R  
+### **Extra coding 1: make publication ready interactive Tables in R**  
 *inspired from http://www.htmlwidgets.org/showcase_datatables.html*
 ```{r}
 library('DT')
 datatable(cor_matrix, options = list(pageLength = 10))
+
 ```  
-Or alternatively set the options to be limiting by ht enumber of rows of the imput df.  
-```{r}
-datatable(cor_matrix, options = list(nrow(cor_matrix)))
-```  
+Or alternatively set the options to be limiting by ht enumber of rows of the input df. `datatable(cor_matrix, options = list(nrow(cor_matrix)))`
+
 
 visualize the correlation matrix
 ```{r}
@@ -167,7 +151,7 @@ boston_scaled <- as.data.frame(boston_scaled)
 summary(boston_scaled)
 
 str(boston_scaled)
-head(boston_scaled)
+#head(boston_scaled)
 
 
 
@@ -280,7 +264,7 @@ lda.pred <- predict(lda.fit, newdata = test)
 table(correct = correct_classes, predicted = lda.pred$class)
 ```  
 
-# EXTRA coding 1: Create a nice graph with confusion matrix
+### **Extra coding 2: Create a nice graph with confusion matrix**  
 *insprited from https://stackoverflow.com/a/64539733*
 ```{r}
 library('caret')
@@ -294,7 +278,7 @@ ggplot(as.data.frame(cm$table), aes(Prediction,sort(Reference,decreasing = T), f
   scale_y_discrete(labels=c('high', 'med_high', 'med_low', 'low'))
 ```  
 
-# EXTRA coding 2: Calculate overall accuracy  
+### **Extra coding 3: Calculate overall accuracy**    
 Overall accuracy shows the overall number of correctly classified labels over the incorrect ones.  
 *code inspritred from https://stackoverflow.com/a/24349171*
 ```{r}
@@ -370,7 +354,7 @@ km <-kmeans(Boston, centers = 2) #number of clusters
 km
 ```  
 
-# EXTRA coding 3: Run a loop to optimse number of clusters  
+### **Extra coding 4: Run a loop to optimse number of clusters**  
 Here I analyse different number of clusters by changing the centers = 2) and report below the Within cluster sum of squares by cluster.  
 By looking at the code, I understood that within cluster sum of squares by cluster is calculated by dividing  between_SS to total_SS. So, let's write that to our loop to get that printed. Hence, I wrote the code to print this as it loops.  
 ```{r}
@@ -397,7 +381,7 @@ pairs(Boston, col = km$cluster)
 As figure shows, and explained above, using some columns like tax and black, tax and dist are easily separable.
 
 
-# EXTRA coding 4: Another code to compute and plot the total within-cluster sum of square  
+### **Extra coding 5: Another code to compute and plot the total within-cluster sum of square**  
 *inspired from https://www.r-bloggers.com/2020/05/practical-guide-to-k-means-clustering/*
 This can be considered as an alternative way.  
 ```{r}
@@ -416,7 +400,7 @@ wssplot(Boston, nc = 9)
 
 
 
-# EXTRA coding 5: Another method to find optimal number of clusters for k-means  
+### **Extra coding 6: Another method to find optimal number of clusters for k-means**    
 *inspired from: http://www.sthda.com/english/wiki/factoextra-r-package-easy-multivariate-data-analyses-and-elegant-visualization#cluster-analysis-and-factoextra*
 ```{r}
 library("factoextra")
@@ -466,7 +450,7 @@ scatter3D(x = matrix_product$LD1, y = matrix_product$LD2,
 From this view, we can see that it's clear to discriminate two cluster from this view (one cluster in right side and other one in left side), however, if we were able to rotate this plot, we could rotate and see other side to discuss more about the 4 possible clusters visually. I made it possible in below extra coding.  
 
 
-# EXTRA coding 7: Create interactive 3D plot; interactively rotate and zoom the graphs.
+### **Extra coding 7: Create interactive 3D plot; interactively rotate and zoom the graphs.**  
 *inspired from http://www.sthda.com/english/wiki/impressive-package-for-3d-and-4d-graph-r-software-and-data-visualization*
 ```{r}
 # Make the rgl version
@@ -491,7 +475,7 @@ plot(lda.fit, dimen = 3, col = classes, pch = classes)
 So, we can see that it is very easy to make 2 clusters visually. and even possible to 4 clusters.  
 
 
-# EXTRA coding 7: to show the clusters in graph  
+### **Extra coding 8: to show the clusters in graph**  
 *inspired from https://www.r-bloggers.com/2020/05/practical-guide-to-k-means-clustering/*
 ```{r}
 #Related to bouns 2: coloring
