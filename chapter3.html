@@ -659,62 +659,8 @@ colnames(students_math_por_joint)</code></pre>
 #View(students_math_por_joint)
 
 # glimpse at the data, it is like str() but prints more data. In other words, like a transposed version of print()
-glimpse(students_math_por_joint)</code></pre>
-<pre><code>## Rows: 382
-## Columns: 53
-## $ school          &lt;chr&gt; &quot;GP&quot;, &quot;GP&quot;, &quot;GP&quot;, &quot;GP&quot;, &quot;GP&quot;, &quot;GP&quot;, &quot;GP&quot;, &quot;GP&quot;, &quot;GP...
-## $ sex             &lt;chr&gt; &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;...
-## $ age             &lt;int&gt; 18, 17, 15, 15, 16, 16, 16, 17, 15, 15, 15, 15, 15,...
-## $ address         &lt;chr&gt; &quot;U&quot;, &quot;U&quot;, &quot;U&quot;, &quot;U&quot;, &quot;U&quot;, &quot;U&quot;, &quot;U&quot;, &quot;U&quot;, &quot;U&quot;, &quot;U&quot;, &quot;...
-## $ famsize         &lt;chr&gt; &quot;GT3&quot;, &quot;GT3&quot;, &quot;LE3&quot;, &quot;GT3&quot;, &quot;GT3&quot;, &quot;LE3&quot;, &quot;LE3&quot;, &quot;G...
-## $ Pstatus         &lt;chr&gt; &quot;A&quot;, &quot;T&quot;, &quot;T&quot;, &quot;T&quot;, &quot;T&quot;, &quot;T&quot;, &quot;T&quot;, &quot;A&quot;, &quot;A&quot;, &quot;T&quot;, &quot;...
-## $ Medu            &lt;int&gt; 4, 1, 1, 4, 3, 4, 2, 4, 3, 3, 4, 2, 4, 4, 2, 4, 4, ...
-## $ Fedu            &lt;int&gt; 4, 1, 1, 2, 3, 3, 2, 4, 2, 4, 4, 1, 4, 3, 2, 4, 4, ...
-## $ Mjob            &lt;chr&gt; &quot;at_home&quot;, &quot;at_home&quot;, &quot;at_home&quot;, &quot;health&quot;, &quot;other&quot;,...
-## $ Fjob            &lt;chr&gt; &quot;teacher&quot;, &quot;other&quot;, &quot;other&quot;, &quot;services&quot;, &quot;other&quot;, &quot;...
-## $ reason          &lt;chr&gt; &quot;course&quot;, &quot;course&quot;, &quot;other&quot;, &quot;home&quot;, &quot;home&quot;, &quot;reput...
-## $ guardian_math   &lt;chr&gt; &quot;mother&quot;, &quot;father&quot;, &quot;mother&quot;, &quot;mother&quot;, &quot;father&quot;, &quot;...
-## $ traveltime_math &lt;int&gt; 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 3, 1, 2, 1, 1, 1, ...
-## $ studytime_math  &lt;int&gt; 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 3, 1, 2, 3, 1, 3, ...
-## $ failures_math   &lt;int&gt; 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
-## $ schoolsup_math  &lt;chr&gt; &quot;yes&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, ...
-## $ famsup_math     &lt;chr&gt; &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;yes&quot;...
-## $ paid_math       &lt;chr&gt; &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;,...
-## $ activities_math &lt;chr&gt; &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;...
-## $ nursery         &lt;chr&gt; &quot;yes&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;ye...
-## $ higher_math     &lt;chr&gt; &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;y...
-## $ internet        &lt;chr&gt; &quot;no&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;no&quot;...
-## $ romantic_math   &lt;chr&gt; &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;n...
-## $ famrel_math     &lt;int&gt; 4, 5, 4, 3, 4, 5, 4, 4, 4, 5, 3, 5, 4, 5, 4, 4, 3, ...
-## $ freetime_math   &lt;int&gt; 3, 3, 3, 2, 3, 4, 4, 1, 2, 5, 3, 2, 3, 4, 5, 4, 2, ...
-## $ goout_math      &lt;int&gt; 4, 3, 2, 2, 2, 2, 4, 4, 2, 1, 3, 2, 3, 3, 2, 4, 3, ...
-## $ Dalc_math       &lt;int&gt; 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
-## $ Walc_math       &lt;int&gt; 1, 1, 3, 1, 2, 2, 1, 1, 1, 1, 2, 1, 3, 2, 1, 2, 2, ...
-## $ health_math     &lt;int&gt; 3, 3, 3, 5, 5, 5, 3, 1, 1, 5, 2, 4, 5, 3, 3, 2, 2, ...
-## $ absences_math   &lt;int&gt; 6, 4, 10, 2, 4, 10, 0, 6, 0, 0, 0, 4, 2, 2, 0, 4, 6...
-## $ G1_math         &lt;int&gt; 5, 5, 7, 15, 6, 15, 12, 6, 16, 14, 10, 10, 14, 10, ...
-## $ G2_math         &lt;int&gt; 6, 5, 8, 14, 10, 15, 12, 5, 18, 15, 8, 12, 14, 10, ...
-## $ G3_math         &lt;int&gt; 6, 6, 10, 15, 10, 15, 11, 6, 19, 15, 9, 12, 14, 11,...
-## $ guardian_por    &lt;chr&gt; &quot;mother&quot;, &quot;father&quot;, &quot;mother&quot;, &quot;mother&quot;, &quot;father&quot;, &quot;...
-## $ traveltime_por  &lt;int&gt; 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 3, 1, 2, 1, 1, 1, ...
-## $ studytime_por   &lt;int&gt; 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 3, 1, 2, 3, 1, 3, ...
-## $ failures_por    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
-## $ schoolsup_por   &lt;chr&gt; &quot;yes&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, ...
-## $ famsup_por      &lt;chr&gt; &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;yes&quot;...
-## $ paid_por        &lt;chr&gt; &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no...
-## $ activities_por  &lt;chr&gt; &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;...
-## $ higher_por      &lt;chr&gt; &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;yes&quot;, &quot;y...
-## $ romantic_por    &lt;chr&gt; &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;n...
-## $ famrel_por      &lt;int&gt; 4, 5, 4, 3, 4, 5, 4, 4, 4, 5, 3, 5, 4, 5, 4, 4, 3, ...
-## $ freetime_por    &lt;int&gt; 3, 3, 3, 2, 3, 4, 4, 1, 2, 5, 3, 2, 3, 4, 5, 4, 2, ...
-## $ goout_por       &lt;int&gt; 4, 3, 2, 2, 2, 2, 4, 4, 2, 1, 3, 2, 3, 3, 2, 4, 3, ...
-## $ Dalc_por        &lt;int&gt; 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
-## $ Walc_por        &lt;int&gt; 1, 1, 3, 1, 2, 2, 1, 1, 1, 1, 2, 1, 3, 2, 1, 2, 2, ...
-## $ health_por      &lt;int&gt; 3, 3, 3, 5, 5, 5, 3, 1, 1, 5, 2, 4, 5, 3, 3, 2, 2, ...
-## $ absences_por    &lt;int&gt; 4, 2, 6, 0, 0, 6, 0, 2, 0, 0, 2, 0, 0, 0, 0, 6, 10,...
-## $ G1_por          &lt;int&gt; 0, 9, 12, 14, 11, 12, 13, 10, 15, 12, 14, 10, 12, 1...
-## $ G2_por          &lt;int&gt; 11, 11, 13, 14, 13, 12, 12, 13, 16, 12, 14, 12, 13,...
-## $ G3_por          &lt;int&gt; 11, 11, 12, 14, 13, 13, 13, 13, 17, 13, 14, 13, 12,...</code></pre>
+&#39;glimpse(students_math_por_joint)&#39; # I comment theis line out to shorten the</code></pre>
+<pre><code>## [1] &quot;glimpse(students_math_por_joint)&quot;</code></pre>
 <pre class="r"><code># check data structure
 &#39;str(students_math_por_joint)&#39; # I comment these lines out to shorten the report</code></pre>
 <pre><code>## [1] &quot;str(students_math_por_joint)&quot;</code></pre>
@@ -1318,35 +1264,35 @@ for (i in k){
   # average number of wrong predictions in the cross validation
   print (cv$delta[1])}</code></pre>
 <pre><code>## [1] 2
-## [1] 0.2460733
+## [1] 0.2382199
 ## [1] 3
-## [1] 0.2486911
-## [1] 4
 ## [1] 0.2513089
+## [1] 4
+## [1] 0.2617801
 ## [1] 5
-## [1] 0.2617801
+## [1] 0.2643979
 ## [1] 6
-## [1] 0.2539267
+## [1] 0.2643979
 ## [1] 7
-## [1] 0.2617801
+## [1] 0.2486911
 ## [1] 8
 ## [1] 0.2565445
 ## [1] 9
-## [1] 0.2486911
+## [1] 0.2591623
 ## [1] 10
-## [1] 0.2565445
-## [1] 11
-## [1] 0.2539267
-## [1] 12
 ## [1] 0.2513089
+## [1] 11
+## [1] 0.2513089
+## [1] 12
+## [1] 0.2539267
 ## [1] 13
 ## [1] 0.2565445
 ## [1] 14
-## [1] 0.2591623
+## [1] 0.2486911
 ## [1] 15
-## [1] 0.2460733
+## [1] 0.2539267
 ## [1] 20
-## [1] 0.2643979
+## [1] 0.2513089
 ## [1] 25
 ## [1] 0.2565445</code></pre>
 <p>So, the accuracy of model improved by hyper tuning using cross-validation values in loop (above), because the, average number of wrong predictions (shown by cv$delta[1] in above) decreased a bit.</p>
@@ -1495,7 +1441,7 @@ cv &lt;- cv.glm(data = dt_some_col, cost = loss_func, glmfit = regres_model, K =
 
 # average number of wrong predictions in the cross validation
 cv$delta[1]</code></pre>
-<pre><code>## [1] 0.2853403</code></pre>
+<pre><code>## [1] 0.2591623</code></pre>
 </div>
 <div id="extra-coding-5-try-different-k-values-using-a-loop-for-new-model" class="section level3">
 <h3><strong>Extra coding 5: Try different k values using a loop for new model</strong></h3>
@@ -1506,37 +1452,37 @@ for (i in k){
   # average number of wrong predictions in the cross validation
   print (cv$delta[1])}</code></pre>
 <pre><code>## [1] 2
-## [1] 0.2329843
+## [1] 0.2303665
 ## [1] 3
-## [1] 0.2251309
+## [1] 0.2408377
 ## [1] 4
 ## [1] 0.2277487
 ## [1] 5
-## [1] 0.2225131
+## [1] 0.2251309
 ## [1] 6
-## [1] 0.2277487
+## [1] 0.2329843
 ## [1] 7
-## [1] 0.2303665
+## [1] 0.2251309
 ## [1] 8
-## [1] 0.2251309
+## [1] 0.2172775
 ## [1] 9
-## [1] 0.2198953
-## [1] 10
-## [1] 0.2303665
-## [1] 11
 ## [1] 0.2277487
+## [1] 10
+## [1] 0.2382199
+## [1] 11
+## [1] 0.2303665
 ## [1] 12
-## [1] 0.2225131
+## [1] 0.2277487
 ## [1] 13
-## [1] 0.2251309
+## [1] 0.2277487
 ## [1] 14
 ## [1] 0.2303665
 ## [1] 15
 ## [1] 0.2356021
 ## [1] 20
-## [1] 0.2198953
+## [1] 0.2225131
 ## [1] 25
-## [1] 0.2251309</code></pre>
+## [1] 0.2277487</code></pre>
 <p>So, the accuracy of crossvalidation improved by adding the new variable (quality of family relation), because the average number of wrong predictions (shown by cv$delta[1] in above) decreased</p>
 </div>
 </div>

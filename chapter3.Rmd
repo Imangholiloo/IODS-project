@@ -86,7 +86,7 @@ colnames(students_math_por_joint)
 #View(students_math_por_joint)
 
 # glimpse at the data, it is like str() but prints more data. In other words, like a transposed version of print()
-glimpse(students_math_por_joint)
+'glimpse(students_math_por_joint)' # I comment theis line out to shorten the
 
 # check data structure
 'str(students_math_por_joint)' # I comment these lines out to shorten the report
